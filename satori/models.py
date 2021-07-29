@@ -38,7 +38,7 @@ class Exponential(nn.Module):
 
 
 class AttentionNet(nn.Module): #for the model that uses CNN, RNN (optionally), and MH attention
-    def __init__(self, argSpace, params, device=None, genPAttn=True, reuseWeightsQK=False):
+    def __init__(self, num_classes, params, device=None, genPAttn=True, reuseWeightsQK=False):
         super(AttentionNet, self).__init__()
         self.numMultiHeads = params['num_multiheads']
         self.SingleHeadSize = params['singlehead_size']#SingleHeadSize
@@ -57,7 +57,7 @@ class AttentionNet(nn.Module): #for the model that uses CNN, RNN (optionally), a
         self.filterSize = params['CNN_filtersize']
         self.CNNpoolSize = params['CNN_poolsize']
         self.CNNpadding = params['CNN_padding']
-        self.numClasses = argSpace.numLabels
+        self.numClasses = num_classes
         self.device = device
         self.reuseWeightsQK = reuseWeightsQK
         self.numInputChannels = params['input_channels'] #number of channels, one hot encoding
@@ -104,6 +104,7 @@ class AttentionNet(nn.Module): #for the model that uses CNN, RNN (optionally), a
 
         self.RELU = nn.ModuleList([nn.ReLU() for i in range(0,self.numMultiHeads)])
         self.MultiHeadLinear = nn.Linear(in_features=self.SingleHeadSize*self.numMultiHeads, out_features=self.MultiHeadSize)#50
+        
         self.MHReLU = nn.ReLU()
 
         self.fc3 = nn.Linear(in_features=self.MultiHeadSize, out_features=self.numClasses)

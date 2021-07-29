@@ -269,7 +269,7 @@ def run_experiment(device, arg_space, params):
     #    pdb.set_trace()
     #    print(batch[0][:10])
     #--------test code-------#
-    net = AttentionNet(arg_space, params, device=device).to(device)
+    net = AttentionNet(num_labels, params, device=device).to(device)
     if num_labels == 2:
         criterion = nn.CrossEntropyLoss(reduction='mean')
     else:

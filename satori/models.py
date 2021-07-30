@@ -160,3 +160,15 @@ class AttentionNet(nn.Module): #for the model that uses CNN, RNN (optionally), a
             return output,pAttn_concat
         else:
             return output
+
+
+def criterion():
+    return(nn.BCEWithLogitsLoss())
+
+
+def get_optimizer(lr):
+    # Hmm need to save optimizer states better
+    return(
+        torch.optim.Adam,
+        {"lr": lr}
+    )
